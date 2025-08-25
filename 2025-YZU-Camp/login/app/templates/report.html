@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>回報問題</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+  <div class="bg-white shadow-lg rounded-2xl p-8 w-full max-w-md text-center">
+    <h2 class="text-2xl font-bold text-red-600 mb-6">回報問題</h2>
+
+    <form action="/report" method="POST" class="space-y-4">
+      <input type="url" name="url" required placeholder="請輸入網址"
+             class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-red-500 outline-none">
+
+      <button type="submit"
+              class="w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition">
+        提交
+      </button>
+    </form>
+
+    <div class="mt-6">
+      <a href="{{ url_for('login') }}" class="text-blue-600 hover:underline">返回登入頁面</a>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,7 @@
+services:
+  web:
+    build: .
+    ports:
+      - "8888:8888"
+    environment:
+      - FLAG=YZU{J50NP_3NDP01N7_15_3V3RYWH3R3}
