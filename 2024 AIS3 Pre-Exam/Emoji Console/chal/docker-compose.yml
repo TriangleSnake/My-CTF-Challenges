@@ -1,0 +1,9 @@
+services:
+  emoji:
+    build: .
+    volumes:
+      - ./app:/app:ro
+    ports:
+      - "5001:5000"
+    restart: always
+

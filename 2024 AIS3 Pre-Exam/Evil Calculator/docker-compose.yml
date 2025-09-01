@@ -1,0 +1,6 @@
+services:
+  evil_calc:
+    build: .
+    ports: 
+      - "5001:5001"
+

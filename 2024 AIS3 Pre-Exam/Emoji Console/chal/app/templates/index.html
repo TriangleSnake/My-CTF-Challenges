@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Command Executor Console</title>
+  <style>
+    body {
+      background-color: #282c34;
+      color: #ffffff;
+      font-family: 'Courier New', Courier, monospace;
+      padding: 20px;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    .flex-container {
+      display: flex;
+      justify-content: space-around;
+      margin-bottom: 20px;
+    }
+
+    #inputArea,
+    #translatedCommand {
+      width: 48%;
+    }
+
+    textarea {
+      background-color: #000000;
+      color: #00FF00;
+      border: none;
+      padding: 10px;
+      height: 150px; 
+      margin-bottom: 10px;
+      resize: none;
+      width: 100%; 
+    }
+
+    button {
+      background-color: #555555;
+      color: #ffffff;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #777777;
+    }
+
+    #emojiKeyboard {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .emoji-button {
+      font-size: 1.5rem;
+      padding: 5px;
+      margin: 2px;
+      cursor: pointer;
+      background: transparent;
+      border: none;
+      color: inherit;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="flex-container">
+    <div id="inputArea">
+      <h2>Input:</h2>
+      <textarea id="commandInput">ℹ️ 🅰️Ⓜ️ 🔼🐍 ⭐➖⭐</textarea>
+      <button onclick="executeCommand()">Execute Command</button>
+    </div>
+
+    <div id="translatedCommand">
+      <h2>Command: i am trianglepython *-*</h2>
+      <textarea id="commandResult" disabled="true">/bin/sh: 1: i: not found</textarea>
+    </div>
+  </div>
+  <div id="emojiKeyboard"></div>
+  <script>
+    const emojis = [
+    "😀",
+    "😁",
+    "😂",
+    "🤣",
+    "😃",
+    "😄",
+    "😅",
+    "😆",
+    "😉",
+    "😊",
+    "😋",
+    "😎",
+    "😍",
+    "😘",
+    "😗",
+    "😙",
+    "😚",
+    "☺️",
+    "🙂",
+    "🤗",
+    "🤩",
+    "🤔",
+    "🤨",
+    "😐",
+    "😑",
+    "😶",
+    "🙄",
+    "😏",
+    "😣",
+    "😥",
+    "😮",
+    "🤐",
+    "😯",
+    "😪",
+    "😫",
+    "😴",
+    "😌",
+    "😛",
+    "😜",
+    "😝",
+    "🤤",
+    "😒",
+    "😓",
+    "😔",
+    "😕",
+    "🙃",
+    "🤑",
+    "😲",
+    "☹️",
+    "🙁",
+    "😖",
+    "😞",
+    "😟",
+    "😤",
+    "😢",
+    "😭",
+    "😦",
+    "😧",
+    "😨",
+    "😩",
+    "🤯",
+    "😬",
+    "😰",
+    "😱",
+    "🥵",
+    "🥶",
+    "😳",
+    "🤪",
+    "😵",
+    "🥴",
+    "😠",
+    "😡",
+    "🤬",
+    "🤕",
+    "🤢",
+    "🤮",
+    "🤧",
+    "😇",
+    "🥳",
+    "🥺",
+    "🤡",
+    "🤠",
+    "🤥",
+    "🤫",
+    "🤭",
+    "🐶",
+    "🐱",
+    "🐭",
+    "🐹",
+    "🐰",
+    "🦊",
+    "🐻",
+    "🐼",
+    "🐨",
+    "🐯",
+    "🦁",
+    "🐮",
+    "🐷",
+    "🐽",
+    "🐸",
+    "🐒",
+    "🐔",
+    "🐧",
+    "🐦",
+    "🐤",
+    "🐣",
+    "🐥",
+    "🦆",
+    "🦅",
+    "🦉",
+    "🦇",
+    "🐺",
+    "🐗",
+    "🐴",
+    "🦄",
+    "🐝",
+    "🐛",
+    "🦋",
+    "🐌",
+    "🐞",
+    "🐜",
+    "🦟",
+    "🦗",
+    "🕷️",
+    "🕸️",
+    "🦂",
+    "🐢",
+    "🐍",
+    "🦎",
+    "🦖",
+    "🦕",
+    "🐙",
+    "🦑",
+    "🦐",
+    "🦞",
+    "🦀",
+    "🐡",
+    "🐠",
+    "🐟",
+    "🐬",
+    "🐳",
+    "🐋",
+    "🦈",
+    "🐊",
+    "🐅",
+    "🐆",
+    "🦓",
+    "🦍",
+    "🦧",
+    "🦣",
+    "🐘",
+    "🦛",
+    "🦏",
+    "🐪",
+    "🐫",
+    "🦒",
+    "🦘",
+    "🦬",
+    "🦥",
+    "🦦",
+    "🦨",
+    "🦡",
+    "🐾",
+    "◼️",
+    "◻️",
+    "◾",
+    "◽",
+    "▪️",
+    "▫️",
+    "🔶",
+    "🔷",
+    "🔸",
+    "🔹",
+    "🔺",
+    "🔻",
+    "🔼",
+    "🔽",
+    "🔘",
+    "⚪",
+    "⚫",
+    "🟠",
+    "🟢",
+    "🔵",
+    "🟣",
+    "🟡",
+    "🟤",
+    "⭕",
+    "🅰️",
+    "🅱️",
+    "🅾️",
+    "ℹ️",
+    "🅿️",
+    "Ⓜ️",
+    "🆎",
+    "🆑",
+    "🆒",
+    "🆓",
+    "🆔",
+    "🆕",
+    "🆖",
+    "🆗",
+    "🆘",
+    "🆙",
+    "🆚",
+    "㊗️",
+    "㊙️",
+    "🈺",
+    "🈯",
+    "🉐",
+    "🈹",
+    "🈚",
+    "🈲",
+    "🈸",
+    "🈴",
+    "🈳",
+    "🈵",
+    "🈶",
+    "🈷️",
+    "🚗",
+    "🚕",
+    "🚙",
+    "🚌",
+    "🚎",
+    "🏎️",
+    "🚓",
+    "🚑",
+    "🚒",
+    "🚐",
+    "🚚",
+    "🚛",
+    "🚜",
+    "🛴",
+    "🚲",
+    "🛵",
+    "🏍️",
+    "✈️",
+    "🚀",
+    "🛸",
+    "🚁",
+    "🛶",
+    "⛵",
+    "🚤",
+    "🛳️",
+    "⛴️",
+    "🛥️",
+    "🚢",
+    "👨",
+    "👩",
+    "👶",
+    "🧓",
+    "👵",
+    "💿",
+    "📀",
+    "📱",
+    "💻",
+    "🖥️",
+    "🖨️",
+    "⌨️",
+    "🖱️",
+    "🖲️",
+    "🕹️",
+    "🗜️",
+    "💾",
+    "💽",
+    "☎️",
+    "📟",
+    "📺",
+    "📻",
+    "🎙️",
+    "🎚️",
+    "🎛️",
+    "⏰",
+    "🕰️",
+    "⌚",
+    "📡",
+    "🔋",
+    "🔌",
+    "🚩",
+    "⓿",
+    "❶",
+    "❷",
+    "❸",
+    "❹",
+    "❺",
+    "❻",
+    "❼",
+    "❽",
+    "❾",
+    "❿",
+    "➕",
+    "➖",
+    "✖️",
+    "➗",
+    "⭐"
+    ];
+
+    const emojiKeyboard = document.getElementById('emojiKeyboard');
+
+    emojis.forEach(emoji => {
+      const button = document.createElement('button');
+      button.textContent = emoji;
+      button.className = 'emoji-button';
+      button.onclick = () => insertEmoji(emoji);
+      emojiKeyboard.appendChild(button);
+    });
+
+    function insertEmoji(emoji) {
+      const commandInput = document.getElementById('commandInput');
+      commandInput.value += emoji;
+      commandInput.focus();
+    }
+    function executeCommand() {
+      var command = document.getElementById("commandInput").value;
+      var url = '/api?command=' + encodeURIComponent(command);
+      fetch(url).then(response => response.json()).then(
+        data => {
+          document.getElementById("translatedCommand").querySelector('h2').innerText = "Command: " + data.command;
+          document.getElementById("commandResult").value = data.result;
+        }
+      );
+    }
+  </script>
+
+</body>
+
+</html>

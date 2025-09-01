@@ -1,0 +1,16 @@
+---
+name: "Emoji Console"
+description: >
+  🔺🐍 😡 🅰️ 🆒 1️⃣Ⓜ️🅾️ 🚅☠️✉️ 🥫🫵 🔍🚩⁉️
+
+  Connection info: http://chals1.ais3.org:5000
+
+  Author: TriangleSnake
+flag: "AIS3{🫵🪡🉐🤙🤙🤙👉👉🚩👈👈}"
+author: "TriangleSnake"
+port: 5000
+tags:
+  - easy
+  - misc
+canonical_name: emoji
+compose: ./chal/docker-compose.yml
