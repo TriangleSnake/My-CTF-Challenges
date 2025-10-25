@@ -1,0 +1,20 @@
+services:
+  catflag:
+    image: catflag
+    cap_add:
+      - NET_ADMIN
+    build: ./
+    volumes:
+      - ./cat.jpg:/root/cat.jpg:ro
+      - ./xinetd:/etc/xinetd.d/catflag:ro
+    ports:
+      #- "9999:9999"
+       - "${PORT}:9999"
+    networks:
+      default:
+networks:
+    default:
+     ipam:
+       config:
+        #Instancer will use ${SUBNET<Number>} to control your subnet
+        - subnet: ${SUBNET0}

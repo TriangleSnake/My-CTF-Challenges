@@ -1,0 +1,15 @@
+service catflag 
+{
+    disable         = no
+    type            = UNLISTED
+    socket_type     = stream
+    protocol        = tcp
+    user            = root
+    wait            = no
+    server          = /bin/sh
+    server_args     = /root/chal.sh
+    port            = 9999
+    bind            = 0.0.0.0
+    log_on_success  += USERID
+    log_on_failure  += USERID
+}
